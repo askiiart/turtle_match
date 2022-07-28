@@ -35,6 +35,7 @@ for i in range(16):
     print(cards[i].rect)
 
 game_is_running = True
+clicked_cards = []
 
 while game_is_running:
     # Draw things
@@ -42,10 +43,20 @@ while game_is_running:
     for card in cards:
         screen.blit(card.image, card.rect)
 
+    if clicked_cards[0].image == clicked_cards[1].image:
+        # Code for if cards match
+        print('Cards match!')
+        clicked_cards = []
+    else:
+        # Code for if cards don't match
+        print('Cards don\'t match!')
+        clicked_cards[0].flip_card()
+        clicked_cards[1].flip_card()
+        clicked_cards = []
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_is_running = False
-        clicked_cards = []
         for card in cards:
             if card.is_clicked():
                 clicked_cards.append(card)
