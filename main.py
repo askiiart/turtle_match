@@ -2,7 +2,7 @@ import os
 import random
 import pygame
 
-from image_sprite import Card
+from card import Card
 
 # CONSTANTS
 WIDTH = 1600
@@ -19,13 +19,20 @@ image_files.extend(image_files)
 random.shuffle(image_files)
 
 # Create sprites
-cards = [Card(f'images/{image_files}', WIDTH, HEIGHT) for file in image_files]
+cards = [Card(f'images/{file}', WIDTH, HEIGHT) for file in image_files]
+for card in cards:
+    screen.blit(card.image, card.rect)
+pygame.display.flip()
+
 # Move sprites
+# TODO: Fix initial movement of sprites
 for i in range(16):
     # Note: Coordinates start from (0, 0) at top left of screen.
     # Arrange cards in a grid, 4x4, with a margin of 20 pixels between each card.
     # Array from left to right, then top to bottom.
-    cards[i].move(i * (150 * i % 4) + 85, i * (150 * int(i / 4)) + 85)
+    cards[i].move((150 * (i % 4)) + 85, (150 * int(i / 4)) + 85)
+    print(str((150 * (i % 4)) + 85), str((150 * int(i / 4)) + 85))
+    print(cards[i].rect)
 
 game_is_running = True
 
@@ -44,5 +51,5 @@ while game_is_running:
                 clicked_cards.append(card)
                 card.on_click()
                 card.flip_card()
-
+    cards[0].move(1, 0)
     pygame.display.flip()

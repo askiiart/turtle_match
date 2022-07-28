@@ -15,25 +15,9 @@ class Card(ImageSprite):
         self.size = 150  # image height and width (in pixels)
         self.card_back = pygame.transform.scale(pygame.image.load('images/turtle.jpg'), (self.size, self.size))
         self.card_front = pygame.transform.scale(pygame.image.load(image_path), (self.size, self.size))
-        super().image = self.card_back
+        self.image = self.card_back
 
         self.temp_count = 0
-
-    @property
-    def image(self):
-        return super().image
-
-    @image.setter
-    def image(self, image):
-        super().image = image
-
-    @property
-    def rect(self):
-        return super().rect
-
-    @rect.setter
-    def rect(self, rect):
-        super().rect = rect
 
     def on_click(self):
         """

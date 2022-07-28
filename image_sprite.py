@@ -10,10 +10,12 @@ class ImageSprite(pygame.sprite.Sprite):
         :param screen_height:
         """
         super().__init__()
-        self.image = pygame.image.load(image_path)
 
+        self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
         self.rect.move(screen_width / 2, screen_height / 2)
+        self.width = screen_width
+        self.height = screen_height
 
     def is_clicked(self):
         """
@@ -33,5 +35,4 @@ class ImageSprite(pygame.sprite.Sprite):
         :param y: y coordinate
         :return: None
         """
-        self.rect.move(x, y)
-
+        self.rect.move(x / self.width, y / self.height)
