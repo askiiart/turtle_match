@@ -60,7 +60,6 @@ while game_is_running:
         for card in cards:
             if card.is_clicked():
                 clicked_cards.append(card)
-                card.on_click()
                 card.flip_card()
     cards[0].move(1, 0)
     pygame.display.flip()

@@ -19,15 +19,6 @@ class Card(ImageSprite):
 
         self.temp_count = 0
 
-    def on_click(self):
-        """
-        Is meant to be called when the card is clicked, but that must be implemented by the class which has-a Card. \
-        Currently prints the number of times the card has been clicked.
-        :return: None
-        """
-        self.temp_count += 1
-        print(self.temp_count)
-
     def flip_card(self):
         if self.image == self.card_back:
             self.image = self.card_front
