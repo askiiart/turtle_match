@@ -4,6 +4,7 @@ from tkinter import PhotoImage
 
 class Card(turtle.Turtle):
     card_count = 0
+
     def __init__(self, image_path):
         """
         Initializes Card object.
@@ -41,7 +42,7 @@ class Card(turtle.Turtle):
 
     def is_mouse_over(self, x, y):
         # Collision code reused from D. Atkinson's Turtle Crossing program, with some minor modifications.
-        # https://www.youtube.com/watch?v=dQw4w9WgXcQ
+        # http://tiny.cc/ShortCodeLink
         top_edge = self.ycor() + 103
         bottom_edge = self.ycor() - 103
         car_left_edge = self.xcor() - 103
