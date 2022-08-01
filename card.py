@@ -1,26 +1,48 @@
-import pygame
-from image_sprite import ImageSprite
+import turtle
+from tkinter import PhotoImage
 
 
-class Card(ImageSprite):
-    def __init__(self, image_path, screen_width, screen_height):
+class Card(turtle.Turtle):
+    def __init__(self, image_path):
         """
         Initializes Card object.
         :param image_path: Path to image
-        :param screen_width: Width of screen
-        :param screen_height: Height of screen
         """
-        super().__init__(image_path, screen_width, screen_height)
+        super().__init__()
 
-        self.size = 150  # image height and width (in pixels)
-        self.card_back = pygame.transform.scale(pygame.image.load('images/turtle.jpg'), (self.size, self.size))
-        self.card_front = pygame.transform.scale(pygame.image.load(image_path), (self.size, self.size))
-        self.image = self.card_back
+        # self.size = 150  # desired image height and width (in pixels)
+        self.penup()
+        self.speed(8)
+        self.smaller_back = PhotoImage(file='images/turtle.png').subsample(4, 4)
+        turtle.addshape('card_back', turtle.Shape('image', self.smaller_back))
+        self.smaller_front = PhotoImage(file=image_path).subsample(4, 4)
+        turtle.addshape('card_front', turtle.Shape('image', self.smaller_front))
+        self.shape('card_back')
 
-        self.temp_count = 0
+    def to_front(self):
+        self.shape('card_front')
 
-    def flip_card(self):
-        if self.image == self.card_back:
-            self.image = self.card_front
-        else:
-            self.image = self.card_back
+    def to_back(self):
+        self.shape('card_back')
+
+    def is_mouse_over(self, x, y):
+        # Collision code reused from D. Atkinson's Turtle Crossing program, with some minor modifications.
+        top_edge = self.ycor() + 103
+        bottom_edge = self.ycor() - 103
+        car_left_edge = self.xcor() - 103
+        car_right_edge = self.xcor() + 103
+        if (
+                (
+                        (y - bottom_edge > 0 and top_edge - y > 0)
+                        or
+                        (top_edge - y > 0 and y - bottom_edge > 0)
+                )
+                and
+                (
+                        (x - car_left_edge > 0 and car_right_edge - x > 0)
+                        or
+                        (x - car_left_edge > 0 and car_right_edge - x > 0)
+                )
+        ):
+            return True
+        return False

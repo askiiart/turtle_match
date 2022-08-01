@@ -1,65 +1,80 @@
-import os
-import random
-import pygame
+try:
+    import os
+    import random
+    import time
+    import turtle
 
-from card import Card
+    from card import Card
 
-# CONSTANTS
-WIDTH = 1600
-HEIGHT = 900
-BACKGROUND_COLOR = (66, 135, 245)
+    # CONSTANTS
+    WIDTH = 1600
+    HEIGHT = 840
+    BACKGROUND_COLOR = (66, 135, 245)
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Turtle Cards')
+    screen = turtle.Screen()
+    turtle.bgcolor('#46a38d')
+    screen.setup(WIDTH, HEIGHT)
 
-# Creates list of images, doubles it, and shuffles it
-image_files = os.listdir('images')
-image_files.remove('turtle.jpg')
-image_files.extend(image_files)
-random.shuffle(image_files)
 
-# Create sprites
-cards = [Card(f'images/{file}', WIDTH, HEIGHT) for file in image_files]
-for card in cards:
-    screen.blit(card.image, card.rect)
-pygame.display.flip()
+    def coord_translation(x, y):
+        """
+        Translates coordinates from the screen to turtle.
+        :param x: x coordinate
+        :param y: y coordinate
+        :return: Translated coordinates
+        """
+        return x - (WIDTH / 2), y - (HEIGHT / 2)
 
-# Move sprites
-# TODO: Fix initial movement of sprites
-for i in range(16):
-    # Note: Coordinates start from (0, 0) at top left of screen.
-    # Arrange cards in a grid, 4x4, with a margin of 20 pixels between each card.
-    # Array from left to right, then top to bottom.
-    cards[i].move((150 * (i % 4)) + 85, (150 * int(i / 4)) + 85)
-    print(str((150 * (i % 4)) + 85), str((150 * int(i / 4)) + 85))
-    print(cards[i].rect)
 
-game_is_running = True
-clicked_cards = []
+    # Creates list of images, doubles it, and shuffles it
+    image_files = os.listdir('images')
+    image_files.remove('turtle.png')
+    image_files.extend(image_files)
+    random.shuffle(image_files)
 
-while game_is_running:
-    # Draw things
-    screen.fill(BACKGROUND_COLOR)
-    for card in cards:
-        screen.blit(card.image, card.rect)
+    cards = [Card(f'images/{file}') for file in image_files]
 
-    if clicked_cards[0].image == clicked_cards[1].image:
-        # Code for if cards match
-        print('Cards match!')
-        clicked_cards = []
-    else:
-        # Code for if cards don't match
-        print('Cards don\'t match!')
-        clicked_cards[0].flip_card()
-        clicked_cards[1].flip_card()
-        clicked_cards = []
+    # Move sprites
+    for i in range(16):
+        # Note: Coordinates start from (0, 0) at top left of screen.
+        # Arrange cards in a grid, 4x4, with a margin of 20 pixels between each card.
+        # Array from left to right, then top to bottom.
+        x, y = coord_translation((210 * (i % 4)) + 105, (210 * int(i / 4)) + 105)
+        cards[i].goto(x, y)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game_is_running = False
+
+    def clicked_card(x, y):
+        """
+        :return: The card which was clicked
+        """
         for card in cards:
-            if card.is_clicked():
+            if card.is_mouse_over(x, y):
+                print(cards.index(card))
+                card.to_front()
                 clicked_cards.append(card)
-                card.flip_card()
-    cards[0].move(1, 0)
-    pygame.display.flip()
+
+
+    screen.onclick(fun=clicked_card)
+
+    game_is_running = True
+    clicked_cards = []
+    score = 0
+
+    while game_is_running:
+        time.sleep(0.1)
+        if len(clicked_cards) == 2:
+            if clicked_cards[0].shape() != clicked_cards[1].shape():
+                time.sleep(2)
+                clicked_cards[0].to_back()
+                clicked_cards[1].to_back()
+                print('Wrong!')
+                score -= 1
+            else:
+                print('Correct!')
+                score += 5
+            clicked_cards = []
+        screen.update()
+
+    screen.mainloop()
+except turtle.Terminator:
+    exit(0)
