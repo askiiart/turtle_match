@@ -1,3 +1,5 @@
+from audio import Audio
+
 try:
     import os
     import random
@@ -14,8 +16,12 @@ try:
     screen = turtle.Screen()
     turtle.bgcolor('#46a38d')
     screen.setup(WIDTH, HEIGHT)
-    score_text = turtle.Turtle()
 
+    Audio.start_audio()
+    Audio.play_background_music()
+
+    # Scoreboard
+    score_text = turtle.Turtle()
     score_text.hideturtle()
     score_text.penup()
     score_text.goto((WIDTH - HEIGHT) // 2, HEIGHT * .25)
@@ -42,7 +48,6 @@ try:
     cards = []
     for file in image_files:
         path = f'images/{file}'
-        print(path)
         cards.append(Card(path))
 
     # Move sprites
@@ -53,31 +58,28 @@ try:
         x, y = coord_translation((210 * (i % 4)) + 105, (210 * int(i / 4)) + 105)
         cards[i].goto(x, y)
 
+    score = 0
+    game_is_running = True
+    clicked_cards = []
 
     def clicked_card(x, y):
         """
         :return: The card which was clicked
         """
+        Audio.click()
         global clicked_cards
         for card in cards:
             if card.is_mouse_over(x, y):
                 if len(clicked_cards) == 2:
                     clicked_cards = []
-                print(cards.index(card))
                 card.to_front()
                 clicked_cards.append(card)
-
-
-    score = 0
 
 
     def update_score():
         score_text.clear()
         score_text.write(f'Score: {score}', font=('Arial', 24, 'bold'))
 
-
-    game_is_running = True
-    clicked_cards = []
 
     screen.onclick(fun=clicked_card)
 
@@ -88,13 +90,13 @@ try:
                 time.sleep(1)
                 clicked_cards[0].to_back()
                 clicked_cards[1].to_back()
-                print('Wrong!')
                 score -= 1
                 update_score()
+                Audio.no_match()
             else:
-                print('Correct!')
                 score += 5
                 update_score()
+                Audio.match_made()
             clicked_cards = []
         screen.update()
 
