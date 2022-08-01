@@ -60,7 +60,9 @@ try:
         cards[i].goto(x, y)
 
     score = 0
+    matches = 0
     game_is_running = True
+    end_routine_done = False
     clicked_cards = []
 
     def clicked_card(x, y):
@@ -70,7 +72,7 @@ try:
         Audio.click()
         global clicked_cards
         for card in cards:
-            if card.is_mouse_over(x, y):
+            if card.is_mouse_over(x, y) and card.shape()[:10] != 'card_front':
                 if len(clicked_cards) == 2:
                     clicked_cards = []
                 card.to_front()
@@ -86,6 +88,13 @@ try:
 
     while game_is_running:
         time.sleep(0.1)
+        if not end_routine_done:
+            if matches >= 8:
+                Audio.pause_music()
+                Audio.game_success()
+                time.sleep(3.1)
+                Audio.unpause_background_music()
+                end_routine_done = True
         if len(clicked_cards) == 2:
             if clicked_cards[0] != clicked_cards[1]:
                 time.sleep(1)
@@ -98,6 +107,7 @@ try:
                 score += 5
                 update_score()
                 Audio.match_made()
+                matches += 1
             clicked_cards = []
         screen.update()
 

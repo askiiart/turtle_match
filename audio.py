@@ -34,8 +34,12 @@ class Audio:
         mixer.music.set_volume(0.5)
 
     @staticmethod
-    def stop_background_music():
-        mixer.music.stop()
+    def pause_music():
+        mixer.music.pause()
+
+    @staticmethod
+    def unpause_background_music():
+        mixer.music.unpause()
 
     @staticmethod
     def click():
