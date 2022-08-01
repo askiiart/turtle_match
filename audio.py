@@ -25,7 +25,7 @@ class Audio:
         # no_match sound is from https://freesound.org/people/distillerystudio/sounds/327738/
         Audio.no_match_sound = mixer.Sound('audio/no_match.wav')
 
-        # game_success_sound is from https://freesound.org/people/jimhancock/sounds/376318/
+        # game_success_sound is TMNT turtle Michaelangelo saying "Cowabunga!"
         Audio.game_success_sound = mixer.Sound('audio/game_success.wav')
 
     @staticmethod
