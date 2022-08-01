@@ -3,24 +3,38 @@ from tkinter import PhotoImage
 
 
 class Card(turtle.Turtle):
+    card_count = 0
     def __init__(self, image_path):
         """
         Initializes Card object.
-        :param image_path: Path to image
+        :param image_path: Path to image for card_front
         """
         super().__init__()
 
-        # self.size = 150  # desired image height and width (in pixels)
+        self.image_path = image_path
+        self.card_id = Card.card_count
+        Card.card_count += 1
         self.penup()
         self.speed(8)
-        self.smaller_back = PhotoImage(file='images/turtle.png').subsample(4, 4)
-        turtle.addshape('card_back', turtle.Shape('image', self.smaller_back))
-        self.smaller_front = PhotoImage(file=image_path).subsample(4, 4)
-        turtle.addshape('card_front', turtle.Shape('image', self.smaller_front))
+        self.back = PhotoImage(file='images/turtle.png').subsample(4, 4)
+        turtle.addshape('card_back', turtle.Shape('image', self.back))
+        self.front = PhotoImage(file=image_path).subsample(4, 4)
+        turtle.addshape(f'card_front{self.card_id}', turtle.Shape('image', self.front))
         self.shape('card_back')
 
+    def __eq__(self, other):
+        """
+        Checks if two cards have the same front image.
+        :param other: Another Card object
+        :return: True if cards have the same front image, False otherwise.
+        """
+        if type(other) is not Card:
+            raise TypeError('Can only compare Card objects to other Card objects.')
+        else:
+            return self.image_path == other.image_path
+
     def to_front(self):
-        self.shape('card_front')
+        self.shape(f'card_front{self.card_id}')
 
     def to_back(self):
         self.shape('card_back')
