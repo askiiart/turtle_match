@@ -16,6 +16,7 @@ try:
     screen = turtle.Screen()
     turtle.bgcolor('#46a38d')
     screen.setup(WIDTH, HEIGHT)
+    screen.title('Turtle Match - Benjamin Zimmerman')
 
     Audio.start_audio()
     Audio.play_background_music()
