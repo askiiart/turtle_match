@@ -96,18 +96,18 @@ try:
                 Audio.unpause_background_music()
                 end_routine_done = True
         if len(clicked_cards) == 2:
-            if clicked_cards[0] != clicked_cards[1]:
+            if clicked_cards[0] == clicked_cards[1]:
+                score += 5
+                update_score()
+                Audio.match_made()
+                matches += 1
+            else:
                 time.sleep(1)
                 clicked_cards[0].to_back()
                 clicked_cards[1].to_back()
                 score -= 1
                 update_score()
                 Audio.no_match()
-            else:
-                score += 5
-                update_score()
-                Audio.match_made()
-                matches += 1
             clicked_cards = []
         screen.update()
 
