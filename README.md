@@ -3,6 +3,10 @@
 Info for users:
 - This is my final project (option 1) for ITSE-1479.
 - It is a memory game with a graphical interface.
+- You can click on a card to flip it. Match 2 cards correctly and the cards will stay flipped. Match all cards to win.
+- Scoring:
+  - When you make an incorrect match, you lose 1 point.
+  - When you make a correct match, you gain 5 points.
 
 Technical info:
 - This program is written in Python 3, using the turtle module for graphics, and the pygame module for sound and music.
@@ -11,6 +15,6 @@ Technical info:
     - Just wait until the cards flip back over.
 
 Future plans:
-- I'll eventually expand the game behavior to a queue of cards to flip over once the incorrect match is flipped back over instead of just waiting for the cards to flip back over.
-
-One last note: Sorry if this README file looks weird. I can't see what I'm writing, because the preview in PyCharm isn't working.
+- Change the game behavior to a queue of cards to flip over once the incorrect match is flipped back over, instead of just waiting for the cards to flip back over.
+- Expand the game to include a stopwatch.
+- Expand score to include number of correct and incorrect matches.
