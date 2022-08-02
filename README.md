@@ -1,5 +1,5 @@
 ## Memory Game
-##### Benjamin Zimmerman
+#### Benjamin Zimmerman
 
 Info for users:
 - This is my final project (option 1) for ITSE-1479.
