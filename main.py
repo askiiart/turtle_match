@@ -67,14 +67,14 @@ try:
 
     def clicked_card(x, y):
         """
-        :return: The card which was clicked
+        Appends the card which was clicked on to the list clicked_cards.
         """
-        Audio.click()
         global clicked_cards
+        if len(clicked_cards) == 2:
+            return None
+        Audio.click()
         for card in cards:
             if card.is_mouse_over(x, y) and card.shape()[:10] != 'card_front':
-                if len(clicked_cards) == 2:
-                    clicked_cards = []
                 card.to_front()
                 clicked_cards.append(card)
 
