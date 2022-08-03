@@ -72,11 +72,11 @@ try:
         global clicked_cards
         if len(clicked_cards) == 2:
             return None
-        Audio.click()
         for card in cards:
             if card.is_mouse_over(x, y) and card.shape()[:10] != 'card_front':
                 card.to_front()
                 clicked_cards.append(card)
+                Audio.click()
 
 
     def update_score():
@@ -97,6 +97,9 @@ try:
                 end_routine_done = True
         if len(clicked_cards) == 2:
             if clicked_cards[0] == clicked_cards[1]:
+                time.sleep(0.5)
+                clicked_cards[0].hideturtle()
+                clicked_cards[1].hideturtle()
                 score += 5
                 update_score()
                 Audio.match_made()
