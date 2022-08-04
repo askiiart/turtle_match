@@ -18,6 +18,6 @@ Technical info:
     - Just wait until the cards flip back over.
 
 Future plans:
-- Change the game behavior to a queue of cards to flip over once the incorrect match is flipped back over, instead of just waiting for the cards to flip back over.
+- Change the game behavior to a queue of cards to flip over, 1 pair at a time.
 - Expand the game to include a stopwatch.
 - Expand score to include number of correct and incorrect matches.
