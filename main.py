@@ -1,3 +1,5 @@
+from tkinter import PhotoImage
+
 from audio import Audio
 
 try:
@@ -17,6 +19,13 @@ try:
     turtle.bgcolor('#46a38d')
     screen.setup(WIDTH, HEIGHT)
     screen.title('Turtle Match - Benjamin Zimmerman')
+
+    success_t = turtle.Turtle()
+    success_t.hideturtle()
+    success_t.penup()
+    turtle.register_shape('success_turtle', turtle.Shape('image', PhotoImage(file='images/turtle.png')))
+    success_t.shape('success_turtle')
+    success_t.goto(-379, 0)
 
     Audio.start_audio()
     Audio.play_background_music()
@@ -65,6 +74,7 @@ try:
     end_routine_done = False
     clicked_cards = []
 
+
     def clicked_card(x, y):
         """
         Appends the card which was clicked on to the list clicked_cards.
@@ -90,6 +100,7 @@ try:
         time.sleep(0.1)
         if not end_routine_done:
             if matches >= 8:
+                success_t.showturtle()
                 Audio.pause_music()
                 Audio.game_success()
                 time.sleep(3.1)
