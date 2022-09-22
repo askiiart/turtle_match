@@ -4,7 +4,7 @@
 ---
 
 Info for users:
-- This is my final project (option 1) for ITSE-1479.
+- This is my final project (option 1) for ITSE-1479 (Intro to Scripting Languages)
 - It is a memory game with a graphical interface.
 - You can click on a card to flip it. Match 2 cards correctly and the cards will stay flipped. Match all cards to win.
 - Scoring:
